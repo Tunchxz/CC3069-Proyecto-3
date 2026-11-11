@@ -1,0 +1,12 @@
+# Entornos y cachés
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Datos y modelos generados
+/data/
+/models/
+
+# Material temporal
+/tmp/
