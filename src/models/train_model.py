@@ -151,6 +151,34 @@ def set_seed(seed: int = config.SEED) -> None:
     keras.utils.set_random_seed(seed)
 
 
+def enable_memory_growth() -> None:
+    """Hace que TensorFlow reserve memoria de la GPU solo a medida que la necesita.
+
+    Debe llamarse antes de ejecutar cualquier operación en la GPU.
+    """
+    for gpu in tf.config.list_physical_devices("GPU"):
+        tf.config.experimental.set_memory_growth(gpu, True)
+
+
+def host_to_device_seconds(X: np.ndarray, device: str = "/GPU:0") -> float:
+    """Mide el tiempo de copiar un arreglo de la memoria del CPU a la GPU.
+
+    Args:
+        X: Arreglo en la memoria del CPU.
+        device: Dispositivo de destino de TensorFlow.
+
+    Returns:
+        Segundos de la transferencia, incluida la sincronización.
+    """
+    start = time.perf_counter()
+    with tf.device(device):
+        tensor = tf.identity(tf.convert_to_tensor(X))
+        float(tf.reduce_sum(tensor[:1]))
+    elapsed = time.perf_counter() - start
+    del tensor
+    return elapsed
+
+
 def device_name() -> str:
     """Devuelve ``"GPU"`` si TensorFlow detecta una GPU y ``"CPU"`` en otro caso."""
     return "GPU" if tf.config.list_physical_devices("GPU") else "CPU"
