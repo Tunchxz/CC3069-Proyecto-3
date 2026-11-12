@@ -1,0 +1,13 @@
+phase,device,rep,seconds,note
+preprocess,CPU-1core,0,11.477600424999991,first
+preprocess,CPU-1core,1,16.091877453999814,
+preprocess,CPU-1core,2,13.160407754999824,
+preprocess,CPU-1core,3,11.999521065999943,
+preprocess,CPU-1core,4,11.696600080000053,
+preprocess,CPU-1core,5,11.452097951000042,
+train,CPU,1,153.98697721300005,
+inference,CPU,1,1.2043759910000063,
+train,CPU,2,155.42310393699995,
+inference,CPU,2,0.968038665999984,
+train,CPU,3,154.12468881300015,
+inference,CPU,3,0.9905861770002957,
