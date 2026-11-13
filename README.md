@@ -5,19 +5,34 @@ Clasificador de letras del alfabeto ASL (Laboratorio 3) ejecutado de forma secue
 ## Estructura
 
 ```
-notebooks/
-  01-analisis-secuencial.ipynb   Línea base en CPU (pasos 1 y 2)
-src/
-  config.py                      Rutas, semilla e hiperparámetros
-  data/make_dataset.py           Descarga, submuestra (500 por clase) y partición 70/15/15
-  features/build_features.py     Preprocesamiento secuencial (lectura, 64x64, normalización)
-  models/train_model.py          CNN de Keras, entrenamiento y evaluación con medición de tiempo
-  utils/timing.py                Medición y guardado de tiempos
-  utils/monitor.py               Muestreo del uso de CPU por núcleo y de GPU
-  utils/system_info.py           Reporte de hardware y software
-reports/
-  results/                       Tiempos y uso de recursos en CSV
-  figures/                       Gráficas generadas por los notebooks
+CC3069-Proyecto-3/
+│
+├── notebooks/
+│   ├── 01-analisis-secuencial.ipynb   # Línea base en CPU (pasos 1 y 2)
+│   └── 02-implementacion-cuda.ipynb   # CPU multinúcleo, kernel de Numba y GPU (pasos 3 a 5)
+│
+├── src/
+│   ├── config.py                      # Rutas, semilla e hiperparámetros
+│   │
+│   ├── data/
+│   │   └── make_dataset.py            # Descarga, submuestra (500 por clase) y partición 70/15/15
+│   │
+│   ├── features/
+│   │   ├── build_features.py          # Preprocesamiento secuencial (lectura, 64x64, normalización)
+│   │   ├── parallel_features.py       # Preprocesamiento con un pool de procesos
+│   │   └── cuda_kernels.py            # Kernel de Numba para redimensionar y normalizar en la GPU
+│   │
+│   ├── models/
+│   │   └── train_model.py             # CNN de Keras, entrenamiento y evaluación con medición de tiempo
+│   │
+│   └── utils/
+│       ├── timing.py                  # Medición y guardado de tiempos
+│       ├── monitor.py                 # Muestreo del uso de CPU por núcleo y de GPU
+│       └── system_info.py             # Reporte de hardware y software
+│
+└── reports/
+    ├── results/                       # Tiempos y uso de recursos en CSV
+    └── figures/                       # Gráficas generadas por los notebooks
 ```
 
 ## Requisitos
@@ -47,6 +62,10 @@ Los notebooks se ejecutan desde la carpeta `notebooks/` con el kernel `CC3069 P3
 ```bash
 jupyter nbconvert --to notebook --execute --inplace \
   --ExecutePreprocessor.timeout=-1 notebooks/01-analisis-secuencial.ipynb
+jupyter nbconvert --to notebook --execute --inplace \
+  --ExecutePreprocessor.timeout=-1 notebooks/02-implementacion-cuda.ipynb
 ```
+
+El notebook 02 lee los resultados del 01, por lo que deben ejecutarse en ese orden.
 
 Los resultados se guardan en `reports/results/` y las figuras en `reports/figures/`.
