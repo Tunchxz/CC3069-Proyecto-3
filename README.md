@@ -9,7 +9,8 @@ CC3069-Proyecto-3/
 │
 ├── notebooks/
 │   ├── 01-analisis-secuencial.ipynb   # Línea base en CPU (pasos 1 y 2)
-│   └── 02-implementacion-cuda.ipynb   # CPU multinúcleo, kernel de Numba y GPU (pasos 3 a 5)
+│   ├── 02-implementacion-cuda.ipynb   # CPU multinúcleo, kernel de Numba y GPU (pasos 3 a 5)
+│   └── 03-comparacion-speedup.ipynb   # Tabla comparativa, speedup y escalabilidad (paso 6)
 │
 ├── src/
 │   ├── config.py                      # Rutas, semilla e hiperparámetros
@@ -64,8 +65,9 @@ jupyter nbconvert --to notebook --execute --inplace \
   --ExecutePreprocessor.timeout=-1 notebooks/01-analisis-secuencial.ipynb
 jupyter nbconvert --to notebook --execute --inplace \
   --ExecutePreprocessor.timeout=-1 notebooks/02-implementacion-cuda.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/03-comparacion-speedup.ipynb
 ```
 
-El notebook 02 lee los resultados del 01, por lo que deben ejecutarse en ese orden.
+Cada notebook lee los resultados del anterior, por lo que deben ejecutarse en ese orden. El notebook 03 solo lee archivos CSV y no requiere GPU.
 
 Los resultados se guardan en `reports/results/` y las figuras en `reports/figures/`.
